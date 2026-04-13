@@ -6,11 +6,19 @@ const http = require('http');
 // 工具函数：异步延迟（用于重试�?
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
+require('dotenv').config();
+
 module.exports = async function butler(context) {
     const input = context.input || "";
-    const apiKey = "P977A2H-SQ8MC99-J2M72GY-XE1M6TB";
-    const host = "192.168.1.16";
-    const port = 3001;
+    
+    // 🔐 从环境变量读取配置（安全模式）
+    const apiKey = process.env.ANYSHEM_LLAMA_API_KEY;
+    if (!apiKey) {
+        throw new Error("API Key not found. Please set ANYSHEM_LLAMA_API_KEY in .env file.");
+    }
+    
+    const host = process.env.ANYSHEM_HOST || "192.168.1.16";
+    const port = parseInt(process.env.ANYSHEM_PORT) || 3001;
 
     // 1. 增强的库判定逻辑 (NLP 友好架构)
     // 预留语义槽位，未来可直接接入 context.intent
