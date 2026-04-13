@@ -1,9 +1,9 @@
-/**
+﻿/**
  * AnythingLLM Butler - Pro Logic (V2.1)
  */
 const http = require('http');
 
-// 工具函数：异步延迟（用于重试）
+// 工具函数：异步延迟（用于重试�?
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 module.exports = async function butler(context) {
@@ -24,7 +24,7 @@ module.exports = async function butler(context) {
         const normalized = text.toLowerCase();
         // 语义关键词簇
         if (/(party|党建|共建|政务|方案)/.test(normalized)) return "party";
-        if (/(work|工作|奔驰|技术|通报|业务)/.test(normalized)) return "work";
+        if (/(work|工作||技术|通报|业务)/.test(normalized)) return "work";
         if (/(life|生活|个人|记录|日记)/.test(normalized)) return "life";
         return "party"; // 默认回退
     };
@@ -32,7 +32,7 @@ module.exports = async function butler(context) {
     const target = determineWorkspace(input);
     const slug = slugs[target];
 
-    // 2. 指数退避重试机制实现 (2s, 4s, 8s)
+    // 2. 指数退避重试机制实�?(2s, 4s, 8s)
     const maxRetries = 3;
     const retryDelays = [2000, 4000, 8000];
 
@@ -59,15 +59,15 @@ module.exports = async function butler(context) {
                 res.on('end', async () => {
                     // 检查是否需要重试（针对 502/503/504 等服务忙碌状态）
                     if (res.statusCode >= 500 && retryCount < maxRetries) {
-                        console.log(`[Retry] 状态码 ${res.statusCode}，执行第 ${retryCount + 1} 次重试...`);
+                        console.log(`[Retry] 状态码 ${res.statusCode}，执行第 ${retryCount + 1} 次重�?..`);
                         await delay(retryDelays[retryCount]);
                         return resolve(makeRequest(retryCount + 1));
                     }
 
                     try {
                         const json = JSON.parse(responseBody);
-                        // 3. 多字段解析支持
-                        const answer = json.textResponse || json.message || json.answer || json.content || "库内未找到有效匹配。";
+                        // 3. 多字段解析支�?
+                        const answer = json.textResponse || json.message || json.answer || json.content || "库内未找到有效匹配�?;
                         resolve({ success: true, data: answer });
                     } catch (e) {
                         resolve({ success: false, error: "API 响应解析失败" });
@@ -77,11 +77,11 @@ module.exports = async function butler(context) {
 
             req.on('error', async (err) => {
                 if (retryCount < maxRetries) {
-                    console.log(`[Retry] 连接错误: ${err.message}，正在重试...`);
+                    console.log(`[Retry] 连接错误: ${err.message}，正在重�?..`);
                     await delay(retryDelays[retryCount]);
                     return resolve(makeRequest(retryCount + 1));
                 }
-                resolve({ success: false, error: `最终连接失败: ${err.message}` });
+                resolve({ success: false, error: `最终连接失�? ${err.message}` });
             });
 
             req.write(postData);
@@ -91,3 +91,4 @@ module.exports = async function butler(context) {
 
     return await makeRequest();
 };
+

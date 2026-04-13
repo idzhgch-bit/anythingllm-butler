@@ -67,7 +67,7 @@ ANYSHEM_PORT=3001
 | 库名称 | Slug | 关键词示例 |
 |--------|------|------------|
 | `party` | `7ec9cd49-afa3-4594-b370-d7f168c60bf0` | party, 党建，共建，政务，方案 |
-| `work` | `9bf38924-c218-4e84-ba05-5e9ba1de49e9` | work, 工作，奔驰，技术，通报，业务 |
+| `work` | `9bf38924-c218-4e84-ba05-5e9ba1de49e9` | work, 工作，技术，通报，生产，维护 |
 | `life` | `5bcfe47e-8e0e-4fb2-9828-02a016eebcb4` | life, 生活，个人，记录，日记 |
 
 ---
@@ -88,8 +88,8 @@ butler({ input: "帮我查一下党建方案" })
         }
     });
 
-// 查询 work 库（奔驰技术通报）
-butler({ input: "奔驰最新技术通报内容" })
+// 查询 work 库（生产技术通报）
+butler({ input: "最新技术通报内容" })
     .then(result => console.log(result.data));
 
 // 查询 life 库（个人记录）
@@ -123,7 +123,7 @@ node tests/simple-test.cjs
 
 [T2] Workspace Detection Logic
    T1: "党建方案" → party ✅
-   T2: "奔驰技术通报" → work ✅
+   T2: "生产技术通报" → work ✅
    T3: "个人生活记录" → life ✅
 ```
 

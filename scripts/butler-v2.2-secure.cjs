@@ -1,16 +1,16 @@
-/**
+﻿/**
  * AnythingLLM Butler - Pro Logic (V2.2 Secure)
  * Security Update: API Key from Environment Variable
  */
 const http = require('http');
 
-// 工具函数：异步延迟（用于重试）
+// 工具函数：异步延迟（用于重试�?
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 module.exports = async function butler(context) {
     const input = context.input || "";
     
-    // 🔒 从环境变量读取 API Key，提供默认值保护
+    // 🔒 从环境变量读�?API Key，提供默认值保�?
     const apiKey = process.env.ANYSHEM_LLAMA_API_KEY;
     
     // ⚠️ 安全警告：如果使用了默认值，记录日志
@@ -34,7 +34,7 @@ module.exports = async function butler(context) {
     const determineWorkspace = (text) => {
         const normalized = text.toLowerCase();
         if (/party|党建|共建|政务|方案/.test(normalized)) return "party";
-        if (/work|工作 | 奔驰 | 技术 | 通报 | 业务/.test(normalized)) return "work";
+        if (/work|工作 |  | 技�?| 通报 | 业务/.test(normalized)) return "work";
         if (/life|生活 | 个人 | 记录 | 日记/.test(normalized)) return "life";
         return "party"; // 默认回退
     };
@@ -42,7 +42,7 @@ module.exports = async function butler(context) {
     const target = determineWorkspace(input);
     const slug = slugs[target];
 
-    // 2. 指数退避重试机制实现 (2s, 4s, 8s)
+    // 2. 指数退避重试机制实�?(2s, 4s, 8s)
     const maxRetries = 3;
     const retryDelays = [2000, 4000, 8000];
 
@@ -68,14 +68,14 @@ module.exports = async function butler(context) {
                 res.on('data', (chunk) => { responseBody += chunk; });
                 res.on('end', async () => {
                     if (res.statusCode >= 500 && retryCount < maxRetries) {
-                        console.log(`[Retry] 状态码 ${res.statusCode}，执行第 ${retryCount + 1} 次重试...`);
+                        console.log(`[Retry] 状态码 ${res.statusCode}，执行第 ${retryCount + 1} 次重�?..`);
                         await delay(retryDelays[retryCount]);
                         return resolve(makeRequest(retryCount + 1));
                     }
 
                     try {
                         const json = JSON.parse(responseBody);
-                        const answer = json.textResponse || json.message || json.answer || json.content || "库内未找到有效匹配。";
+                        const answer = json.textResponse || json.message || json.answer || json.content || "库内未找到有效匹配�?;
                         resolve({ success: true, data: answer });
                     } catch (e) {
                         resolve({ success: false, error: "API 响应解析失败" });
@@ -85,7 +85,7 @@ module.exports = async function butler(context) {
 
             req.on('error', async (err) => {
                 if (retryCount < maxRetries) {
-                    console.log(`[Retry] 连接错误：${err.message}，正在重试...`);
+                    console.log(`[Retry] 连接错误�?{err.message}，正在重�?..`);
                     await delay(retryDelays[retryCount]);
                     return resolve(makeRequest(retryCount + 1));
                 }
@@ -99,3 +99,5 @@ module.exports = async function butler(context) {
 
     return await makeRequest();
 };
+
+
