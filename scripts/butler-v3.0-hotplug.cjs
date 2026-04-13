@@ -32,12 +32,15 @@ module.exports = async function butler(context) {
         life: process.env.WORKSPACES_LIFE_ID
     };
 
-    // 🧠 智能分库判定逻辑（无硬编码）
+    // 🧠 智能分库判定逻辑（无硬编码，移除多余空格）
     const determineWorkspace = (text) => {
         const normalized = text.toLowerCase();
         
+        // Party 工作区：党建、共建、政务、方案
         if (/party|党建 | 共建 | 政务 | 方案/.test(normalized)) return "party";
+        // Work 工作区：工作、技术、通报、生产、维护
         if (/work|工作 | 技术 | 通报 | 生产 | 维护/.test(normalized)) return "work";
+        // Life 工作区：生活、个人、记录、日记
         if (/life|生活 | 个人 | 记录 | 日记/.test(normalized)) return "life";
         
         // 默认回退到 party 库
