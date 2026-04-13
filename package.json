@@ -1,0 +1,33 @@
+{
+  "name": "anythingllm-butler",
+  "version": "2.2.0-secure",
+  "description": "Local knowledge base butler for AnythingLLM with smart workspace routing and secure API key management",
+  "main": "scripts/butler-v2.2-secure.cjs",
+  "scripts": {
+    "test": "node tests/simple-test.cjs",
+    "deploy": "powershell -ExecutionPolicy Bypass -File deploy-env.ps1"
+  },
+  "keywords": [
+    "anythingllm",
+    "rag",
+    "knowledge-base",
+    "local-ai",
+    "party-work-life"
+  ],
+  "author": "Guochen (StarRush)",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/anythingllm-butler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/anythingllm-butler/issues"
+  },
+  "homepage": "https://github.com/yourusername/anythingllm-butler#readme"
+}

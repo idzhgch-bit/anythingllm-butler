@@ -1,0 +1,15 @@
+# Ignore environment variables (sensitive data)
+.env
+*.env.local
+
+# Ignore sensitive configuration files
+secrets.json
+credentials.yaml
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE settings
+.vscode/
+.idea/
