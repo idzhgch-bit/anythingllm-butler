@@ -4,8 +4,11 @@
   "description": "Local knowledge base butler for AnythingLLM with smart workspace routing and secure API key management",
   "main": "scripts/butler-v2.2-secure.cjs",
   "scripts": {
-    "test": "node tests/simple-test.cjs",
-    "deploy": "powershell -ExecutionPolicy Bypass -File deploy-env.ps1"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "lint": "eslint scripts/ .github/workflows/*.yml",
+    "deploy": "powershell -ExecutionPolicy Bypass -File scripts/add-workspace.ps1",
+    "build": "echo 'Build script not configured yet'",
+    "prepublishOnly": "npm run lint && npm test"
   },
   "keywords": [
     "anythingllm",
