@@ -32,16 +32,18 @@ module.exports = async function butler(context) {
         life: process.env.WORKSPACES_LIFE_ID
     };
 
-    // 🧠 智能分库判定逻辑（无硬编码，移除多余空格）
+    // 🧠 智能分库判定逻辑（无硬编码，移除多余空格，扩展词库）
     const determineWorkspace = (text) => {
         const normalized = text.toLowerCase();
         
-        // Party 工作区：党建、共建、政务、方案
-        if (/party|党建 | 共建 | 政务 | 方案/.test(normalized)) return "party";
-        // Work 工作区：工作、技术、通报、生产、维护
-        if (/work|工作 | 技术 | 通报 | 生产 | 维护/.test(normalized)) return "work";
-        // Life 工作区：生活、个人、记录、日记
-        if (/life|生活 | 个人 | 记录 | 日记/.test(normalized)) return "life";
+        // Party 工作区：党建、党员、支部、党课、书记、组织、学习、会议、文件、通知、政策、红色、思想、理论、实践、先锋、模范、纪律、廉洁、作风、建设
+        if (/party|党建 | 党员 | 支部 | 党课 | 书记 | 组织 | 学习 | 会议 | 文件 | 通知 | 政策 | 红色 | 思想 | 理论 | 实践 | 先锋 | 模范 | 纪律 | 廉洁 | 作风 | 建设/.test(normalized)) return "party";
+        
+        // Work 工作区：工作、技术、通报、生产、维护、工艺、质量、安全、设备、故障、维修、保养、检查、测试、标准、规范、流程、操作、记录、报告、数据、分析、改进、优化、升级
+        if (/work|工作 | 技术 | 通报 | 生产 | 维护 | 工艺 | 质量 | 安全 | 设备 | 故障 | 维修 | 保养 | 检查 | 测试 | 标准 | 规范 | 流程 | 操作 | 记录 | 报告 | 数据 | 分析 | 改进 | 优化 | 升级/.test(normalized)) return "work";
+        
+        // Life 工作区：生活、个人、记录、日记、家庭、孩子、学习、运动、健康、饮食、旅行、娱乐、购物、社交、心情、感悟、目标、计划、回忆、成长、经验、教训、反思、未来
+        if (/life|生活 | 个人 | 记录 | 日记 | 家庭 | 孩子 | 学习 | 运动 | 健康 | 饮食 | 旅行 | 娱乐 | 购物 | 社交 | 心情 | 感悟 | 目标 | 计划 | 回忆 | 成长 | 经验 | 教训 | 反思 | 未来/.test(normalized)) return "life";
         
         // 默认回退到 party 库
         return "party";
